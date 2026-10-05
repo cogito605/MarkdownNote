@@ -6,9 +6,9 @@ async function postNote(req, res) {
     const newNote = await prisma.Note.create({
       data: {
         content,
+        userId: req.user.userId,
       },
     });
-    console.log(newNote);
     res.status(201).json(newNote);
   } catch (error) {
     res.status(500).json({
@@ -21,10 +21,10 @@ async function getHtml(req, res) {
   try {
     const { id } = req.params;
     const note = await prisma.Note.findUnique({
-      where: { id: id },
+      where: { id: id, userId: req.user.userId },
     });
     if (!note) {
-      return res.status(401).json({
+      return res.status(404).json({
         message: "there no note",
       });
     }

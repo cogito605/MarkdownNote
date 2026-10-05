@@ -21,6 +21,16 @@ function parseMarkdown(content) {
             line.slice(indexStart + 2, indexEnd) +
             "</strong>" +
             line.slice(indexEnd + 2);
+        } else if (line.includes("*")) {
+          let indexStart = line.indexOf("*");
+          let indexEnd = line.indexOf("*", indexStart + 1);
+
+          line =
+            line.slice(0, indexStart) +
+            "<strong>" +
+            line.slice(indexStart + 1, indexEnd) +
+            "</strong>" +
+            line.slice(indexEnd + 1);
         }
 
         newHtml.push(`<p>${line}</p>`);
